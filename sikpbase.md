@@ -2,7 +2,7 @@
 `L1 введение, структура курса`
 Базовая информация
 
-`L2 (Listp, SCIM)`
+`L2 (Listp, SCIM)` ================================================================================
 На сайте нет информации чем пользоваться, как запускать (Диалект Racket)
 
 Язык который взялся за решение проблем описания процессов и комплексных систем должен иметь как миминмум 3 вещи:
@@ -64,3 +64,53 @@ Lisp использует префиксную нотацию - в начале 
 
 (define (sqrt x)
     (sqrt-iter 1.0 x))
+
+`L2 Процедуры как асбстракции` ================================================================================
+Инкапсуляция?
+
+(define (sqrt x)
+    (define (good-enough? guess x)
+        (< (abs (- (square guess) x)) 0.01))
+    (define (improve guess x)
+        (average guess (/ x guess)))
+    (define (average a b)
+        (/ (+ a b) 2))
+    (define (sqrt-iter guess x)
+        (if (good-enough? guess x) guess (sqrt-iter (improve guess x) x)))
+    (sqrt-iter 1.0 x)
+    )
+
+Упрощение (Исключаем лишнее объявление x т.к. он передается первым параметром):
+
+(define (sqrt x)
+    (define (good-enough? guess)
+        (< (abs (- (square guess) x)) 0.01))
+    (define (improve guess)
+        (average guess (/ x guess)))
+    (define (average a b)
+        (/ (+ a b) 2))
+    (define (sqrt-iter guess)
+        (if (good-enough? guess) guess (sqrt-iter (improve guess))))
+    (sqrt-iter 1.0)
+    )
+
+Дз - написать программу которая принимает три числа и возвращает сумму квадратов двух наибольших чисел
+
+сумма квадратов
+(define sum-of-squares(+ (square x1) (square y1)))
+(define square (a)
+    (* a a))
+
+(define find-less(x y z)
+   
+
+
+If (a < b) swap (a, b);
+If (a < c) swap (a, c);
+if (b < c) swap (b, c);
+
+(define (swap a1 b1 (define buf a1 (b1) b1 (buf)
+    
+    ))
+
+   
