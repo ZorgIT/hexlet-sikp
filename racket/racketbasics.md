@@ -241,5 +241,39 @@ Unless
         )
 #| END |#
 
+L15 =====
+`Case`
+Пример:
+(let ([v 0])
+  (case v
+    [(0) "zero"]
+    [(1) "one"]
+    [(2) "two"]
+    [(3 4 5) "many"]))
+; "zero"
+
+Каждая ветка в case описывается квадратными скобками. В левой части список из одного или нескольких эелментов., в правой части возвращаемое значение.
+
+(case 6
+  [(0) "zero"]
+  [(1) "one"]
+  [(2) "two"]
+  [else "many"])  - поведение по умолчанию.
+; "many"
 
 
+`HOMEWORK CODE`
+Реализовать функцию humanize-permission, которая принимает на вход символьное обозначение прав доступа в Unix системах, и возвращает текстовое описание.
+
+#lang racket
+
+(provide (all-defined-out))
+
+#| BEGIN (write your solution here) |#
+(define (humanize-permission inptstr)
+        (case inptstr
+          [("x") "execute"]
+          [("r") "read"]
+          [("w") "write"])
+)
+#| END |#
