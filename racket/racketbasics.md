@@ -202,3 +202,44 @@ L14 =====
         (if (equal? (string-upcase x) x ) "cry" "common")
         )
 #| END |#
+
+L15 =====
+`Услоная конструкция`
+When и Unless
+
+When
+(when test-expr body ...+) Если результат test-expr истина, то вычисляется тело.
+
+(when (positive? -5)
+  (display "hi"))
+
+(when (positive? 5)
+  (display "hi")
+  (display " there"))
+
+Unless
+(when (not test-expr) body ...+). unless работает наоборот. Тело вычисляется в том случае, если test-expr – ложь. unless хоть и бывает удобен, но резко становится нечитаемым, когда в test-expr появляются составные условия.
+
+(unless (positive? 5)
+  (display "hi"))
+(unless (positive? -5)
+  (display "hi")
+  (display " there"))
+
+
+`HOMEWORK CODE`
+Реализуйте функцию say-boom, которая возвращает строку Boom!, если ее вызвали с параметром "go"
+
+#lang racket
+
+(provide (all-defined-out))
+
+#| BEGIN (write your solution here) |#
+(define (say-boom inptstr)  
+        (when (equal? inptstr "go")
+          "Boom!")
+        )
+#| END |#
+
+
+
