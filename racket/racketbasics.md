@@ -114,3 +114,45 @@ require работает с путями (абсолютными и относи
 require автоматически делает доступным все, что в импортируемом модуле указано в provide.
 Существует альтернативный способ вызова require
 (require (only-in "math.rkt" sum)) - only-in говорит что надо включить из модуля переменную sum и больше ничего.
+
+L11 =====
+`Локальные объявления`
+define может использоваться и в нутри функций 
+(define (f)
+  (define text "lorem")
+  (displayln text))
+Объявления переменных должно идти в самом анчале функции, до любых других выражений.
+(let ([text "lorem"]) (displayln text)) ; => lorem
+
+Все объявления внутри let доступны только в выражениях, которые вызываются внутри самого let после списка объявлений(ОБЪЯВЛЕНИЯ НЕ ВИДЯТ ДРУГ ДРУГА)
+(let ([x 2]
+      [y (+ 4 3)])
+  (+ x y)) ; 9
+
+(define (sum-of-squares x y)
+  (let ([x-square (* x x)]
+        [y-square (* y y)])
+    (+ x-square y-square)))
+
+(define (sum-of-squares x y)
+  (let ([square (lambda (n) (* n n))])
+    (+ (square x) (square y))))
+(sum-of-squares 8 7) ; => 113
+
+Объявления созданные в рамках одного использования let, не видны друг другу. Форма let так устроена что каждое объявление из списка она создает "с чистого листа"
+Для того чтобы использовать в последующих объявлениях предыдущие, можно исользовать форму let*.
+(let* ([x 2]
+       [y (* x 20)]
+       [z (+ x y)])
+  z)                ; 42
+
+  `HOMEWORK CODE`
+#lang racket
+
+(provide (all-defined-out))
+
+#| BEGIN (write your solution here) |#
+(define (square-of-sum x y)
+  (let ([sum (lambda (x y) (+ x y))])
+   (* (sum x y) (sum x y))))
+#| END |#
