@@ -171,10 +171,34 @@ L12 =====
 (and (odd? 3) (even? 4)) ; #t
 
 `HOMEWORK CODE`
+Реализовать функция same-parity? которая принимает на вход два числа и возвращает #t в том случае если их четность совпадает.
+#lang racket
 
+(provide (all-defined-out))
+
+#| BEGIN (write your solution here) |#
 (define (same-parity? x y) 
   (equal? 
     (= (remainder x 2) 0)
     (= (remainder y 2) 0)
     )
    )
+#| END |#
+
+
+L14 =====
+`Услоная конструкция`
+(if test-expr then-expr else-expr)
+(if (> 3 2) (displayln "yes") (displayln "no")) ; => yes
+
+`HOMEWORK CODE`
+Реализовать функцию sentece-type, которая возвращает строку cry если впереданный текст написан загалвными буквами и возвращает строку common в остальных случаях.
+#lang racket
+
+(provide (all-defined-out))
+
+#| BEGIN (write your solution here) |#
+(define (sentence-type x)  
+        (if (equal? (string-upcase x) x ) "cry" "common")
+        )
+#| END |#
