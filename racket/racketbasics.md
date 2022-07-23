@@ -302,6 +302,48 @@ L17 =====
 )
 #| END |#
 
+L18 =====
+Логические выражения
+Вместо логических конструкций можно использовать if,case, cond,
+Примеры:
+(displayln (if #t "Ok" "Oops")) ; => Ok
+(displayln (when #f "Ok"))      ; => #<void>
+
+можно писать довольно таки сложные выражения, не выделяя промежуточные вычисления в переменные:
+(define (classify x)
+  (cond
+    [(< x 0) "Negative"]
+    [(case x
+       [(13 42 100500) #t]
+       [else #f]) "Special"]
+    [else "Boring"]))
+
+Пример с Let
+(define (classify x)
+  (let ([is-special
+         (case x
+           [(13 42 100500) #t]
+           [else #f])])
+    (cond
+      [(< x 0) "Negative"]
+      [is-special "Special"]
+      [else "Boring"])))
+
+#lang racket
+
+`HOMEWORK CODE`
+(provide (all-defined-out))
+
+#| BEGIN |#
+(define (do-today day-of-week)
+  (cond
+    [(and (integer? day-of-week)
+          (<= 1 day-of-week 7))
+     (case day-of-week
+       [(6 7) "rest"]
+       [else "work"])]
+    [else "???"]))
+#| END |#
 
 
 
