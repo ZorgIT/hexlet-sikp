@@ -279,6 +279,30 @@ L16 =====
 #| END |#
 
 L17 =====
-`Cond`
+`Cond` (несолько условий)
+пример:
+(cond
+  [(positive? -5) "first return"]
+  [(zero? -5) "second return"]
+  [(positive? 5) "third return"]
+  [else "boom!"])
+
+`HOMEWORK CODE`
+#lang racket
+
+(provide (all-defined-out))
+
+#| BEGIN (write your solution here) |#
+(define (programmer-level inplvl)
+  (cond
+  [(and (> inplvl 0) (< inplvl 10)) "junior"]
+  [(and (> inplvl 10) (< inplvl 20)) "middle"]
+  [(> inplvl 20) "senior"] 
+  )
+)
+#| END |#
+
+
+
 
 
