@@ -441,3 +441,57 @@ foldr правая свертка
          0 xs ys))
 #| END |#
 
+L23 =====
+`Внутреннее устройство списков, пары, cons, null`
+
+Пара созданется с помощью функции cons:
+(cons 1 2)  ; '(1 . 2) элементы пары разделяет точка
+(pair? (cons 1 2)) ; #true
+
+для доступа к элементам пары используются функции car и cdr 
+(define p (cons "Bob" 42))
+(car p) ; "Bob"
+(cdr p) ; 42
+
+=cons+null
+список - пара из первого сохраняемого значения (голова) и другого списка наываемого хвостом 
+пример сборки списка вручную:
+(cons 1 (cons 2 (cons 3 null))) ; '(1 2 3)
+!НЕ любая пара является списком. второй элемент пары должен сам быть списком, пусть даже пустыми, только тогда эта пара будет считаться списком.
+Приеры пар:
+(pair? (cons 1 2))            ; #t
+(list? (cons 1 2))            ; #f - справа не список
+
+(pair? (cons 1 null))          ; #t
+(list? (cons 1 null))          ; #t - тут всё понятно
+
+(pair? (cons 1 (cons 2 3)))   ; #t
+(list? (cons 1 (cons 2 3)))   ; #f - хвост не является списком!
+
+(list? (cons 1 (cons 2 null))) ; #t - всё хвосты являются списками
+
+first/rest
+ - первый элемент, крайний элемент работает только со списком.
+ 
+ (first (cons 1 2))
+; first: contract violation
+;   expected: (and/c list? (not/c empty?))
+; ...
+(rest (cons 1 2))
+; rest: contract violation
+;   expected: (and/c list? (not/c empty?))
+; ...
+
+`HOMEWORK CODE` 
+Реализуйте функцию lookup, которая бы должна принимать аргумент-ключ и список пар "ключ-значение" и возвращать либо пару "ключ-значение", где ключ равен первому аргументу, либо возвращать #f, если подходящих пар в списке не нашлось. Если подходящих пар найдётся несколько, вернуть нужно первую.
+#lang racket
+
+(provide (all-defined-out))
+
+#| BEGIN (write your solution here) |#
+(define (lookup key pairs)
+  (let* ([same-key? (lambda (kv) (equal? key (car kv)))]
+         [found-pairs (filter same-key? pairs)])
+    (if (empty? found-pairs) #f
+        (first found-pairs))))
+#| END |#
