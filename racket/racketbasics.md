@@ -404,3 +404,40 @@ L21 =====
   (map add1 (filter number? inptlst))
 )
 #| END |#
+
+L22 =====
+`Сворачивание списков, функции свертки foldl и foldr`
+Суть сворачивания - применение некоторой бинанрной операции к очередному элменту списка и текущему значеиню аккумулятора с целью получить новое значение аккумулятора.
+foldl лева свертка
+foldr правая свертка
+
+(foldr + 0 (list 1 2 3)) ; 6
+(foldl + 0 (list 1 2 3)) ; 6
+
+пример левой свертки с двумя списками
+ (define (f greeting name acc)
+   (string-append acc greeting ", " name "!\n"))
+
+ (display
+   (foldl f ""
+            (list "Hello" "Hi" "Good day")
+            (list "Bob" "Alice" "Tom")))
+ ; => Hello, Bob!
+ ; => Hi, Alice!
+ ; => Good day, Tom!
+ ; =>
+`HOMEWORK CODE` 
+Реализуйте функцию max-delta, которая должна принимать два списка чисел и вычислять максимальную разницу (абсолютное значение разницы) между соответствующими парами элементов.
+Решение учителя:
+#lang racket
+
+(provide (all-defined-out))
+
+#| BEGIN |#
+(define (max-delta xs ys)
+  (foldl 
+    (lambda [x y m] - объявление лямбда функции
+    (max m (abs (- x y)))) - состав функции ()
+         0 xs ys))
+#| END |#
+
