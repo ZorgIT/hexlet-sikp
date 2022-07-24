@@ -345,6 +345,25 @@ L18 =====
     [else "???"]))
 #| END |#
 
+L19 =====
+`Объявление списков`
+
+(list 1 2 3); `(1 2 3)`
+(list "apple" "orange"); `("apple" "orange")`
+(list 1 (list 2 3) 4); `(1 (2 3) 4)`
+
+функция предикат list? вернет #t #f
+
+`HOMEWORK CODE` Реализуйте функцию triple, которая должна принимать один аргумент любого типа и возвращать список, в котором содержится три копии аргумента:
+#lang racket
+(provide (all-defined-out))
+
+#| BEGIN (write your solution here) |#
+(define (triple inpt)
+  (list inpt inpt inpt)
+)
+#| END |#
+
 
 
 
