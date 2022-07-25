@@ -496,7 +496,7 @@ first/rest
         (first found-pairs))))
 #| END |#
 
-L23 =====
+L24 =====
 `Обход списков и рекурсия`
 !Список это пара из головы и списка-хвоста.!
 
@@ -518,3 +518,47 @@ L23 =====
   (if (or (<= n 0) (empty? l)) l
       (skip (sub1 n) (rest l))))
 #| END |#
+
+L25 =====
+`Символы`
+Любой текст в Racket представлен типом string, который представляет собой список фиксированноой длины, состоящий из символов - значений типа char.
+
+Любой печтный символ можно представить в виде символа О_О:
+(displayln #\a) ; => a
+(displayln #\1) ; => 1
+(displayln #\,) ; => ,
+
+Управляющие символы:
+#\space   ; это пробел
+#\newline ; a это — перевод строки
+
+Символы юникод:
+(displayln #\λ)                  ; => λ
+(displayln (integer->char 955))  ; => λ
+(displayln #\u3BB)               ; => λ
+(displayln #\n)                  ; => n
+(displayln #\110)                ; => n
+
+integer->char преобразует десятичное число в строковый символ с кодом 955
+
+`HOMEWORK CODE` 
+Реализуйте две функции, next-char и prev-char, которые вычисляют для символа-аргумента следующий и предыдущий символы (с точки зрения десятичного кода).
+#lang racket
+
+(provide
+ next-char
+ prev-char)
+
+#| BEGIN (write your solution here) |#
+(define (next-char inptchar)
+  (integer->char (+ (char->integer inptchar) 1))
+)
+
+
+(define (prev-char inptchar)
+  (integer->char (- (char->integer inptchar) 1))
+)
+#| END |#
+
+
+  
