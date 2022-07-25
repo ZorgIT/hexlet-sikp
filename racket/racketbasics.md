@@ -495,3 +495,26 @@ first/rest
     (if (empty? found-pairs) #f
         (first found-pairs))))
 #| END |#
+
+L23 =====
+`Обход списков и рекурсия`
+!Список это пара из головы и списка-хвоста.!
+
+Пример рекрусивного вычисления длинны списка:
+(define (length lst)
+  (cond
+    [(empty? lst)  0]
+    [(cons? lst)   (+ 1 (length (rest lst)))]))
+
+`HOMEWORK CODE` 
+Реализуйте функцию skip, которая должна принимать два аргумента — целое число n и список — и возвращать новый список, содержащий все элементы из первого списка за исключением n первых элементов. Если n окажется больше, чем количество элементов во входном списке, результатом должен быть пустой список.
+
+#lang racket
+
+(provide (all-defined-out))
+
+#| BEGIN (write your solution here) |#
+(define (skip n l)
+  (if (or (<= n 0) (empty? l)) l
+      (skip (sub1 n) (rest l))))
+#| END |#
