@@ -602,7 +602,7 @@ L26 =====
 #| END |#
 
 
-L26 =====
+L27 =====
 `Сравнение строк и символов, предикаты`
 для сравнения строк и симвлово используются функции - string=? char<?
 тип+оператор+?
@@ -636,6 +636,11 @@ L26 =====
 
 
 `HOMEWORK CODE` 
+Реализуйте два предиката, password-valid? и password-good?. Оба должны оценивать строку.
+
+password-valid? должна возвращать #t, если строка состоит только из букв и цифр (char-alphabetic? и char-numeric?) и при этом имеет ненулевую длину.
+
+password-good? должна возвращать #t, если строка содержит и буквы, и цифры, а длина строки не меньше восьми символов. И, разумеется, хороший пароль должен быть valid!
 #lang racket
 
 (provide
@@ -660,4 +665,62 @@ L26 =====
      (<= 8 (length chars))
      (ormap char-alphabetic? chars)
      (ormap char-numeric? chars))))
+#| END |#
+
+L28 =====
+`Оперирование строками. Получение отдельных символов и подстрок`
+string-ref - получить элемент строки по его индексу
+
+ (string-ref "apple" 3) ; #\l
+ (string-ref "apple" 5)
+ ; string-ref: index is out of range
+ ;   index: 5
+ ;   valid range: [0, 4]
+ ;   string: "apple"
+ ;   context...
+
+изьятие подстроки  - через указание диапазона символов
+; индексы:  01234
+(substring "Apple" 2)   ; "ple"
+(substring "Apple" 1 3) ; "pp"
+(substring "Apple" 10 20)
+; substring: starting index is out of range
+;   starting index: 10
+;   valid range: [0, 5]
+;   string: "Apple"
+;   context...
+
+конкатенация строк - string-append
+(string-append "Hello, " "World!") ; "Hello, World!"
+(string-append "foo")              ; "foo"
+(string-append "b" "a" "r")        ; "bar"
+
+Модуль racket/string
+string-join 
+
+(string-join (list "a" "b" "c")) ; "a b c" - разделитель, это пробел
+
+(define (greet names)
+ (string-join
+  names ", "
+  #:before-first "Hello, "
+  #:before-last " and "
+  #:after-last "!"))
+
+(greet (list "Bob"))               ; "Hello, Bob!"
+(greet (list "Bob" "Tom"))         ; "Hello, Bob and Tom!"
+(greet (list "Bob" "Tom" "Alice")) ; "Hello, Bob, Tom and Alice!"
+
+
+`HOMEWORK CODE`
+Реализуйте функцию scroll-left, которая "прокручивает" строку-аргумент влево так, что в строка-результате все символы, начиная со второго, оказываются сдвинуты на одну позицию влево, а первый символ оказывается в конце строки. В пустой строке прокручивать нечего, поэтому пустая строка должна оставаться неизменной.
+#lang racket
+
+(provide scroll-left)
+
+#| BEGIN (write your solution here) |#
+(define (scroll-left s)
+  (if (zero? (string-length s)) s
+      (string-append (substring s 1)
+                     (substring s 0 1))))
 #| END |#
