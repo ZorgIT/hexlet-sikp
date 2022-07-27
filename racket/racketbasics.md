@@ -560,5 +560,104 @@ integer->char преобразует десятичное число в стро
 )
 #| END |#
 
+L26 =====
+`Создание строк`
 
-  
+Строковые литералы могут содержать специальные символы вроде \n, символы Unicode вроде \u03BB и экранированные двойные кавычки \"
+(displayln "Bond, James\nCode name: \"007\"")
+; => Bond, James
+; => Code name: "007"
+Строковые символы объединяются с помощью string
+
+(define l #\l)
+(string #\H #\e l l #\o #\!) ; "Hello"
+(string)  
+
+заполненная строка заданной длины - make-string
+(make-string 10 #\.) ; ".........."
+Длина строки string-length
+(string-length (string))             ; 0
+(string-length (make-string 10 #\!)) ; 10
+
+Строки нужно обрабатывать как списки
+для этого есть 2 функции string->list и list->string:
+
+(string->list "ab") ; '(#\a #\b)
+(list->string null) ; ""
+(list->string (rest (string->list "Hello"))) ; "ello"
+
+`HOMEWORK CODE` 
+
+Реализуйте функцию next-chars, которая создаёт новую строку на основе строки-аргумента таким образом, что каждый символ новой строки является "следующим" (с точки зрения кода) по отношению к соответствующему символу исходной строки.
+
+#lang racket
+
+(provide next-chars)
+
+#| BEGIN |#
+(define (next-char c) (integer->char (add1 (char->integer c))))
+
+(define (next-chars s)
+  (list->string (map next-char (string->list s))))
+#| END |#
+
+
+L26 =====
+`Сравнение строк и символов, предикаты`
+для сравнения строк и симвлово используются функции - string=? char<?
+тип+оператор+?
+
+(char<?   #\a #\b)     ; #t
+(char>?   #\c #\b #\a) ; #t
+(char=?   #\a #\b)     ; #f
+(string<? "a" "b")     ; #t
+(string>? "c" "b" "a") ; #t
+(string=? "a" "b")     ; #f
+
+регистронезавсимое сравнение с суфиксом -ci (caseinsensitive)
+
+(string=?    "Apple" "apple") ; #f
+(string-ci=? "Apple" "apple") ; #t
+(char>?      #\C     #\b)     ; #f
+(char-ci>?   #\C     #\b)     ; #t
+
+проверка принадлежности к основным группам символов можно спомощью предикатов  -alphabetic? char-lower-case?
+
+(char-alphabetic? #\a)    ; #t
+(char-alphabetic? #\u3BB) ; #t — "λ" это буква, пусть и греческая
+(char-lower-case? #\a)    ; #t
+(char-lower-case? #\A)    ; #f
+
+проверить все символы строки на принадлежность группе можно с применением функции andmap работающей со списками и объединить со string->list
+(andmap char-alphabetic? (string->list "asd"))  ; #t
+(andmap char-alphabetic? (string->list "r2d2")) ; #f
+
+Если заменить andmap на ormap, то вместо проверки "все символы…" получится проверка на "хотя бы один символ…"!
+
+
+`HOMEWORK CODE` 
+#lang racket
+
+(provide
+ password-valid?
+ password-good?)
+
+#| BEGIN (write your solution here) |#
+#| Проверка символа - число-буква|#
+(define (char-alphanumeric? c)
+  (or (char-alphabetic? c)
+      (char-numeric? c)))
+
+(define (password-valid? password)
+  (and
+   (positive? (string-length password))
+   (andmap char-alphanumeric? (string->list password))))
+
+(define (password-good? password)
+  (let ([chars (string->list password)])
+    (and
+     (password-valid? password)
+     (<= 8 (length chars))
+     (ormap char-alphabetic? chars)
+     (ormap char-numeric? chars))))
+#| END |#
