@@ -614,3 +614,37 @@ v3 (define (average-damp f)
         (iter (iterator f g) (- step 1))))
   (iter f n))
 ;; END
+
+
+================================================================================
+`Лекция 4. L17 Метод ньютона` =============================================================
+================================================================================
+Общий случай метода ньютона
+Если функция x=g(x) является диффиренцируемой
+то g(x)=0 - это неподвижная точка fixt p f(x)=x
+f(x)= x - (g(x))/Dg(x)
+
+понятие производной 
+
+x-> x^3 -> x=3x2
+
+если g - функция, dx = маленькое число, то Dg(производная) прозиводная функции g, каждый x = Dg(x)= (g(x+dx)-g(x))/(dx)
+
+(define (deriv g)
+  (lambda (x) 
+  (/ (- (g (+ x dx)) (g x)) dx)))
+
+(define dx 0.00001)
+(define (cube x ) (* x x x ))
+
+((deriv cube) 5)
+
+
+(define (newton-transform g)
+  (lamda(x)(-x(/ g x)((deriv g)x))))
+
+(define (newtons-method g guess)
+  (fixed-point (neton-transform g) guess))
+
+(define (sqrt x)
+  (newtons-method (lambda (y)(- (square y)x))1.0))
