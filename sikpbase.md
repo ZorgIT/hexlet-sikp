@@ -498,3 +498,46 @@ x=2
 (let ((x 3) (y (+ x 2)) 
   (* x y)
   ))
+
+================================================================================
+`Лекция 4. L14 Метод половинного деления` =============================================================
+================================================================================
+Нахождение корней методом половинного деления
+
+f(x)=0 - нужно найти корень , значем что f непрерывная функция
+
+предположим f(a)< 0 < f(b), x=average(a,b)
+проверяем f(x)>0 -> a, x
+          f(x)<0 -> x, b
+
+(define (serch f neg-p pos-p)
+  (let (( mid-p average (neg-p pos-p)))
+    (if (close-enough? neg-p pos-p)
+      mid-p
+      (let (( test-value (f mid-p)
+        (cond ((positive tes-value)
+          search f neg-p mid-p))
+           ((negative? tes-value)
+           (search f mid-p pos-p))
+           ((else mid-p))))))
+   )
+)
+
+(define (close-enough? x y)
+  (< (abs (-x y)) 0.0001))
+
+(define (half-interfal-method f a b )
+  (let ((a-value ( f a ))
+        (b-value ( f b)))
+        (cond (( and (negative? (a-value)
+          (positive? (b-value)
+          (search f a b)
+          ((and (negative? (b-value)
+                (positive? (a-value)
+                search f b a)
+              (else (error "Errro!" a b )))
+              ))
+          ))))
+        )
+  )
+
