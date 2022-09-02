@@ -571,3 +571,46 @@ f(x), f(f(x)) ... и т.д.
 1.2587315962971173
 
 y^2=x \\ y*y=x \\ y=x/y
+
+================================================================================
+`Лекция 4. L16 Процедуры как возвращаемые значения` =============================================================
+================================================================================
+y^2=x \\ y*y=x \\ y=x/y
+
+v1 (define (sqrt x)
+  (fixed-point (lambda (y) (/ x y))1.0))
+
+v2 (define (sqrt x) - торможение усредненеием (average dumpint)
+  (fixed-point (lambda (y) (average y (/ x y))1.0)))
+  
+v3 (define (average-damp f)
+    (lambda (x)(average x (f x))))
+
+  ((average-damp square) 10)
+  
+  .
+
+================================================================================
+`Лекция 4. L16 Homework =============================================================
+================================================================================
+
+
+  (define (square x) (* x x))
+(define (inc x) (+ x 1))
+
+; BEGIN (write your solution here)
+(define (double f)
+  (lambda (x) (f (f x))))
+; END
+
+;; BEGIN (write your solution here)
+(define (iterator f g)
+  (lambda (x) (f (g x))))
+
+(define (repeated f n)
+  (define (iter g step)
+    (if (= step 1)
+        g
+        (iter (iterator f g) (- step 1))))
+  (iter f n))
+;; END
